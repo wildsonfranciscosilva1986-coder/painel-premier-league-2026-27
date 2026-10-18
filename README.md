@@ -6,7 +6,7 @@ Static interactive dashboard hosted by GitHub Pages. This repo is only for the P
 
 - Cutoff: **18 Oct 2026, 09:29 BRT**; 65 final results through 17 Oct, before Sunday's kick-offs.
 - 380 scheduled fixtures (38 matchweeks × 10) and 20 clubs.
-- Baseline CSV: `premier_league_2026_27.csv`; raw official matchweek responses and official standings snapshot are in `source_snapshots/`.
+- Baseline CSV: `premier_league_2026_27.csv`; archived raw official matchweek responses and the official standings snapshot are in `source_snapshots.zip` (the refresh script creates a working `source_snapshots/` directory locally).
 - Independent source comparison and detailed cutoff notes: `epl_2026_27_validation.txt`.
 - Data in the dashboard is derived only from the CSV; scheduled or live fixtures never contribute scores/statistics.
 
