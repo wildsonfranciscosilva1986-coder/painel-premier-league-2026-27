@@ -4,7 +4,7 @@ Static interactive dashboard hosted by GitHub Pages. This repo is only for the P
 
 ## Verified baseline
 
-- Cutoff: **18 Oct 2026, 09:29 BRT**; 65 final results through 17 Oct, before Sunday's kick-offs.
+- Cutoff: **19 Oct 2026, 07:35 BRT**; 69 confirmed final results through 18 Oct, including four Sunday finals.
 - 380 scheduled fixtures (38 matchweeks × 10) and 20 clubs.
 - Baseline CSV: `premier_league_2026_27.csv`; archived raw official matchweek responses and the official standings snapshot are in `source_snapshots.zip` (the refresh script creates a working `source_snapshots/` directory locally).
 - Independent source comparison and detailed cutoff notes: `epl_2026_27_validation.txt`.
@@ -20,7 +20,7 @@ python3 build_dashboard.py
 python3 validate_dashboard.py
 ```
 
-`refresh_official_data.py` retrieves all 38 official PL matchweek endpoints and the official standings endpoint and archives their JSON responses. Only an official `FullTime` status carries scores into the CSV. Review the updated `source_snapshots/`, `refresh_metadata.json`, and standings comparisons; if the official page/table is incomplete or results don't reconcile, hold the publish and investigate rather than accepting an unverified snapshot. The baseline validation includes an independent NBC Sports score/table cross-check; repeat an independent cross-check before publishing a refreshed data cut.
+`refresh_official_data.py` retrieves all 38 official PL matchweek endpoints and the official standings endpoint and archives their JSON responses. Only an official `FullTime` status carries scores into the CSV. Review the updated `source_snapshots/`, `refresh_metadata.json`, and standings comparisons; if the official page/table is incomplete or results don't reconcile, hold the publish and investigate rather than accepting an unverified snapshot. The refreshed cut matches the official standings for all 20 clubs; the four new Sunday finals are independently cross-checked against ESPN. The older 65-result baseline retains its dated NBC Sports cross-check.
 
 `validate_dashboard.py` checks 380 fixtures, 10 per matchweek, unique keys/IDs, score/status consistency, the CSV against the latest official table snapshot (all 20 clubs, played/W-D-L/GF/GA/points), and the embedded page data against the CSV. It also prints verified goal/BTTS/over-2.5 totals.
 
