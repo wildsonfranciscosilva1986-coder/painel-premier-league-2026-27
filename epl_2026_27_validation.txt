@@ -1,18 +1,7 @@
-Premier League 2026/27 dashboard — refreshed validation record
-
-Result/table cutoff: 2026-10-19 07:35 America/Sao_Paulo. Official Premier League matchweek and standings APIs were retrieved at the same cutoff; only FullTime fixtures carry scores.
-
-Coverage and validation
-- 380 official fixtures: 38 matchweeks × 10 matches; 20 clubs; unique official match IDs.
-- 69 confirmed final scores through 18 October; 311 scheduled or not started. Tottenham Hotspur–Coventry City on 19 October remains scoreless/scheduled at this cutoff.
-- Score-derived played, W-D-L, GF, GA and points match the current official Premier League standings for all 20 clubs (all 140 team-stat checks pass).
-- The four additional Sunday 18 October finals versus the previous 65-result snapshot were independently checked against ESPN: Bournemouth 2–0 Sunderland; Brighton 5–0 Crystal Palace; Leeds United 1–1 Manchester United; Nottingham Forest 0–1 Arsenal. All 4/4 match results match ESPN STATUS_FULL_TIME events.
-- Aggregate metrics from 69 finals: 199 goals (2.88 per match); BTTS 36/69 (52.2%); Over 2.5 37/69 (53.6%).
-- No live or scheduled fixture contributes to the standings, form, rankings, or projections.
-
-Sources
-- Primary: official Premier League 2026/27 matchweek and standings APIs; archived under source_snapshots/.
-- Independent latest-results cross-check: ESPN soccer scoreboard API for 17–19 October 2026; archived as espn_recent_scoreboard_crosscheck.json.
-- The previous 65-result baseline also has a dated NBC Sports cross-check recorded in the original audit history; it is not represented as a new NBC snapshot for the four Sunday results.
-
-The forecast remains descriptive and uncalibrated; no betting recommendation is implied.
+Premier League 2026/27 validation — cutoff 2026-10-19T10:17:48.282536-03:00
+Coverage: 380/380 official fixtures; 38 matchweeks × 10; 20 clubs; unique fixture keys and official match IDs.
+Statuses: 69 confirmed final scores; 311 unstarted/live slots have no score in calculations.
+Official standings reconciliation: PASS all 20 clubs across played, W-D-L, goals for/against and points.
+New or corrected final scores independently checked against ESPN STATUS_FULL_TIME: 0/0; mismatches: 0.
+Metrics from finals only: 199 goals (2.88/match); BTTS 36/69 (52.2%); Over 2.5 37/69 (53.6%).
+Only a successful official and independent validation permits the workflow to commit the updated page.
