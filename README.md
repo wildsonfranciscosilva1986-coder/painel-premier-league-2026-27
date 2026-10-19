@@ -10,13 +10,17 @@ Static interactive dashboard hosted by GitHub Pages. This repo is only for the P
 - Independent source comparison and detailed cutoff notes: `epl_2026_27_validation.txt`.
 - Data in the dashboard is derived only from the CSV; scheduled or live fixtures never contribute scores/statistics.
 
-## Manual refresh (e.g. after the 06:00 BRT result check)
+## Automatic refresh
 
-No cron or unattended schedule is installed. From this directory, intentionally run:
+GitHub Actions refreshes this panel daily at **06:10 America/Sao_Paulo (09:10 UTC)**; the workflow can also be started with `workflow_dispatch`. Each run preserves the prior CSV, retrieves all official Premier League matchweeks and standings, cross-checks every new/changed final score against ESPN `STATUS_FULL_TIME`, builds and validates the 380-fixture page, and commits only if every check passes. A source/API mismatch fails closed and leaves the public page unchanged. The existing repository and Pages URL are retained.
+
+For a manual run from this directory, use the same order as the workflow:
 
 ```sh
+cp premier_league_2026_27.csv /tmp/premier-before.csv
 python3 refresh_official_data.py
 python3 build_dashboard.py
+python3 crosscheck_new_results.py /tmp/premier-before.csv
 python3 validate_dashboard.py
 ```
 
