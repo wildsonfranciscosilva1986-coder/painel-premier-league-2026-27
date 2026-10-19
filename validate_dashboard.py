@@ -57,5 +57,18 @@ for term in ['Ambas marcam','Mais de 2,5 gols','Vitórias mandantes','Empates','
 goals=sum(int(r['home_goals'])+int(r['away_goals']) for r in finished)
 btts=sum(int(r['home_goals'])>0 and int(r['away_goals'])>0 for r in finished)
 o25=sum(int(r['home_goals'])+int(r['away_goals'])>=3 for r in finished)
-print(f'PASS: {len(rows)} fixtures; {len(finished)} confirmed finals; {len(teams)} clubs; duplicate-free; all 140 table stat checks exact; embedded data matches CSV.')
-print(f'Observed metrics: {goals} goals; {goals/len(finished):.2f} goals/match; BTTS {btts}/{len(finished)} ({btts/len(finished):.1%}); O2.5 {o25}/{len(finished)} ({o25/len(finished):.1%}).')
+meta=json.loads((R/'refresh_metadata.json').read_text())
+cross=json.loads((R/'source_snapshots/espn_new_results_crosscheck.json').read_text())
+assert cross.get('result')=='PASS' and cross.get('new_or_changed_final_scores')==cross.get('exact_STATUS_FULL_TIME_matches') and cross.get('mismatches')==0
+cutoff=meta.get('cutoff_brt','unknown')
+lines=[
+ f'Premier League 2026/27 validation — cutoff {cutoff}',
+ f'Coverage: {len(rows)}/380 official fixtures; 38 matchweeks × 10; {len(teams)} clubs; unique fixture keys and official match IDs.',
+ f'Statuses: {len(finished)} confirmed final scores; {len(rows)-len(finished)} unstarted/live slots have no score in calculations.',
+ 'Official standings reconciliation: PASS all 20 clubs across played, W-D-L, goals for/against and points.',
+ f'New or corrected final scores independently checked against ESPN STATUS_FULL_TIME: {cross["exact_STATUS_FULL_TIME_matches"]}/{cross["new_or_changed_final_scores"]}; mismatches: 0.',
+ f'Metrics from finals only: {goals} goals ({goals/len(finished):.2f}/match); BTTS {btts}/{len(finished)} ({btts/len(finished):.1%}); Over 2.5 {o25}/{len(finished)} ({o25/len(finished):.1%}).',
+ 'Only a successful official and independent validation permits the workflow to commit the updated page.'
+]
+(R/'epl_2026_27_validation.txt').write_text('\n'.join(lines)+'\n',encoding='utf-8')
+print('\n'.join(lines))
