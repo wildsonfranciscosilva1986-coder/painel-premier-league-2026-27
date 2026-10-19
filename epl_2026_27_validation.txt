@@ -1,57 +1,18 @@
-Premier League 2026–27 dashboard fixture-data validation
+Premier League 2026/27 dashboard — refreshed validation record
 
-Cutoff used for match status/results: 2026-10-18 09:29 America/Sao_Paulo (12:29 UTC; 13:29 BST).
-Fixture/table data was queried shortly after the cutoff (about 09:35 BRT). This is before the first Sunday kickoff at 14:00 BST / 10:00 BRT; no intervening match could have started, and the official standings reflect Saturday 17 October's completed matches.
+Result/table cutoff: 2026-10-19 07:35 America/Sao_Paulo. Official Premier League matchweek and standings APIs were retrieved at the same cutoff; only FullTime fixtures carry scores.
+
+Coverage and validation
+- 380 official fixtures: 38 matchweeks × 10 matches; 20 clubs; unique official match IDs.
+- 69 confirmed final scores through 18 October; 311 scheduled or not started. Tottenham Hotspur–Coventry City on 19 October remains scoreless/scheduled at this cutoff.
+- Score-derived played, W-D-L, GF, GA and points match the current official Premier League standings for all 20 clubs (all 140 team-stat checks pass).
+- The four additional Sunday 18 October finals versus the previous 65-result snapshot were independently checked against ESPN: Bournemouth 2–0 Sunderland; Brighton 5–0 Crystal Palace; Leeds United 1–1 Manchester United; Nottingham Forest 0–1 Arsenal. All 4/4 match results match ESPN STATUS_FULL_TIME events.
+- Aggregate metrics from 69 finals: 199 goals (2.88 per match); BTTS 36/69 (52.2%); Over 2.5 37/69 (53.6%).
+- No live or scheduled fixture contributes to the standings, form, rankings, or projections.
 
 Sources
-- Official PL fixtures/results page: https://www.premierleague.com/en/matches/premier-league/2026-27
-- Official PL match data API (matchweek 1–38): https://sdp-prem-prod.premier-league-prod.pulselive.com/api/v1/competitions/8/seasons/2026/matchweeks/{matchweek}/matches
-- Official PL standings page: https://www.premierleague.com/en/tables/premier-league/2026-27
-- Official PL standings API: https://sdp-prem-prod.premier-league-prod.pulselive.com/api/v5/competitions/8/seasons/2026/standings
-- Independent cross-check (NBC Sports results/full fixture list): https://www.nbcsports.com/soccer/news/premier-league-schedule-for-2026-27-season-released
-- Independent cross-check (NBC Sports standings): https://www.nbcsports.com/soccer/news/premier-league-table-for-2026-27-season
+- Primary: official Premier League 2026/27 matchweek and standings APIs; archived under source_snapshots/.
+- Independent latest-results cross-check: ESPN soccer scoreboard API for 17–19 October 2026; archived as espn_recent_scoreboard_crosscheck.json.
+- The previous 65-result baseline also has a dated NBC Sports cross-check recorded in the original audit history; it is not represented as a new NBC snapshot for the four Sunday results.
 
-CSV coverage and schema
-- File: epl_2026_27.csv (UTF-8 with BOM for spreadsheet compatibility).
-- 380 fixture rows, all 38 matchweeks, 10 fixtures per matchweek.
-- 65 finished results through the cutoff (60 from MW1–6, five MW7 matches played Saturday 17 Oct).
-- 315 scheduled fixtures, including the five remaining MW7 fixtures and all published fixtures MW8–38.
-- Live: 0; date TBD: 0; missing date/kickoff: 0; missing official match IDs: 0.
-- Scores appear only on finished rows; scheduled fixtures' score fields are blank (official API may expose placeholder zeros for some pre-match records).
-- Kickoff date/time are venue-local; kickoff_timezone indicates BST or GMT. Team names follow the official league API spelling, e.g. “Bournemouth” and “Brighton and Hove Albion.”
-
-Validation
-- Recomputed played, W-D-L, goals for, goals against, and points from all 65 finished fixtures. Exact match against the official 2026/27 matchweek-7 standings for all 20 clubs (all 140 team-stat comparisons passed).
-- Independently cross-checked all 65 finished scorelines against the NBC Sports results page: 65/65 exact matches, zero missing or conflicting results.
-- Independently cross-checked all 20 NBC table rows against recomputed W-D-L, goal difference, and points: exact match after normalizing “Brighton & Hove Albion” to official API “Brighton and Hove Albion”; 20/20 rows, no numerical discrepancy.
-- Upcoming MW7–9 fixtures were checked against NBC's published schedule. The CSV's scheduled dates/times/team names/IDs come from the official PL API.
-
-Per-team standings validation (played; W-D-L; GF-GA; points)
-Arsenal: 6; 5-0-1; 10-5; 15
-Aston Villa: 7; 2-2-3; 7-11; 8
-Bournemouth: 6; 0-3-3; 7-13; 3
-Brentford: 7; 2-4-1; 13-8; 10
-Brighton and Hove Albion: 6; 4-1-1; 18-5; 13
-Chelsea: 7; 4-1-2; 17-13; 13
-Coventry City: 6; 2-0-4; 5-11; 6
-Crystal Palace: 6; 2-1-3; 9-12; 7
-Everton: 7; 2-4-1; 8-7; 10
-Fulham: 7; 1-2-4; 7-10; 5
-Hull City: 7; 2-3-2; 8-7; 9
-Ipswich Town: 7; 3-0-4; 11-15; 9
-Leeds United: 6; 2-3-1; 8-5; 9
-Liverpool: 7; 3-3-1; 9-8; 12
-Manchester City: 7; 7-0-0; 19-7; 21
-Manchester United: 6; 1-3-2; 9-9; 6
-Newcastle United: 7; 2-2-3; 10-14; 8
-Nottingham Forest: 6; 1-2-3; 5-8; 5
-Sunderland: 6; 1-1-4; 6-12; 4
-Tottenham Hotspur: 6; 0-3-3; 3-9; 3
-
-Discrepancies/uncertainties: No scoreline, standings-stat, missing-field, or match-ID discrepancies found. Naming differences in NBC's independent data are present for “AFC Bournemouth” vs the official league's “Bournemouth,” and “Brighton & Hove Albion” vs official “Brighton and Hove Albion”; these were normalized for cross-checks only, not in the CSV.
-European zone classification verified on 2026-10-18
-- Official PL explanation: https://www.premierleague.com/en/european-qualification-explained (retrieved 2026-10-18).
-- Four UCL league-phase places are the base allocation; a fifth place depends on the season's association-coefficient European Performance Spot (EPS).
-- FA Cup and EFL Cup winners qualify for Europa League and Conference League respectively, subject to the official redistribution rules. If a fifth UCL berth is earned, the Europa League league-position slot moves down the table as the official rules describe. Cup winners/UEFA titleholders also affect distribution.
-- Therefore no fixed 5th/6th-place UEL/Conference band is presented as secured in this in-season table. Positions 1–4 are labeled as base UCL positions, with the fifth-place EPS caveat. The bottom three are marked for relegation, per the official PL explainer: https://www.premierleague.com/en/news/4365156/new-to-the-premier-league-heres-all-you-need-to-know.
-- Dashboard source list includes these official rules; qualification remains subject to changes in UEFA access-list conditions.
+The forecast remains descriptive and uncalibrated; no betting recommendation is implied.
