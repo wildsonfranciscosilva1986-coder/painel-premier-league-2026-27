@@ -1,0 +1,78 @@
+name: Refresh Premier League dashboard
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/refresh-dashboard.yml'
+      - 'README.md'
+      - 'refresh_official_data.py'
+      - 'crosscheck_new_results.py'
+      - 'build_dashboard.py'
+      - 'validate_dashboard.py'
+  schedule:
+    # GitHub cron is UTC; this is 06:10 America/Sao_Paulo.
+    - cron: '10 9 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: premier-league-dashboard-refresh
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - name: Check out the existing dashboard repository
+        uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Preserve the pre-refresh fixtures for score-change detection
+        run: cp premier_league_2026_27.csv "$RUNNER_TEMP/premier-league-before.csv"
+      - name: Fetch official fixtures and standings
+        run: python3 refresh_official_data.py
+      - name: Build dashboard from the refreshed official CSV
+        run: python3 build_dashboard.py
+      - name: Cross-check every newly finalised score against ESPN
+        run: python3 crosscheck_new_results.py "$RUNNER_TEMP/premier-league-before.csv"
+      - name: Validate coverage, final-only stats and embedded data
+        run: python3 validate_dashboard.py
+      - name: Verify independent cross-check passed
+        run: |
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+          report=json.loads(Path('source_snapshots/espn_new_results_crosscheck.json').read_text())
+          assert report['result']=='PASS'
+          assert report['new_or_changed_final_scores']==report['exact_STATUS_FULL_TIME_matches']
+          assert report['mismatches']==0
+          PY
+      - name: Archive current source snapshots
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          from zipfile import ZIP_DEFLATED, ZipFile
+          root=Path('source_snapshots')
+          with ZipFile('source_snapshots.zip','w',ZIP_DEFLATED) as z:
+              for path in sorted(root.rglob('*')):
+                  if path.is_file(): z.write(path, path.as_posix())
+          PY
+      - name: Commit only the validated refresh
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add README.md .github/workflows/refresh-dashboard.yml crosscheck_new_results.py \
+            premier_league_2026_27.csv refresh_metadata.json epl_2026_27_validation.txt \
+            source_snapshots.zip index.html
+          if git diff --cached --quiet; then
+            echo 'No validated dashboard changes to commit.'
+            exit 0
+          fi
+          git commit -m 'Refresh Premier League dashboard after validation'
+          git push
