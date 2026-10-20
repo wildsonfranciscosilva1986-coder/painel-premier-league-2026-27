@@ -51,6 +51,10 @@ page=(R/'index.html').read_text()
 data=json.loads(re.search(r'const DATA=(\{.*?\});\nconst teams=',page,re.S).group(1))
 assert len(data['matches'])==380 and set(data['teams'])==teams
 assert sum(m['status']=='finished' for m in data['matches'])==len(finished)
+assert 'programadas diariamente às 06:10 BRT' in page
+assert 'não está conectado a atualização automática' not in page.lower()
+assert 'atualização automática não configurada' not in page.lower()
+assert 'conjunto de 65 jogos' not in page.lower()
 for term in ['Ambas marcam','Mais de 2,5 gols','Vitórias mandantes','Empates','Vitórias visitantes','Concluídos','Agendados','European qualification explained','últimos cinco jogos','Estimativas']:
  assert term.lower() in page.lower(), f'missing dashboard feature {term}'
 # Relevant calculation totals (cross-matched independently to final-score rows)
