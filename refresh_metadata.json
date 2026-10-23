@@ -1,6 +1,6 @@
 {
-  "cutoff_brt": "2026-10-22T11:29:20.380526-03:00",
-  "source_checked_at_brt": "2026-10-22T11:29:20.380526-03:00",
+  "cutoff_brt": "2026-10-23T11:12:09.412621-03:00",
+  "source_checked_at_brt": "2026-10-23T11:12:09.412621-03:00",
   "results_through": "2026-10-19",
   "snapshot_note": "Retrieved via official Premier League matchweek and standings APIs; only API FullTime fixtures contribute scores."
 }
