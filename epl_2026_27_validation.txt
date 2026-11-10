@@ -1,7 +1,7 @@
-Premier League 2026/27 validation — cutoff 2026-11-09T16:44:37.205851-03:00
+Premier League 2026/27 validation — cutoff 2026-11-10T13:59:17.954660-03:00
 Coverage: 380/380 official fixtures; 38 matchweeks × 10; 20 clubs; unique fixture keys and official match IDs.
 Statuses: 100 confirmed final scores; 280 unstarted/live slots have no score in calculations.
 Official standings reconciliation: PASS all 20 clubs across played, W-D-L, goals for/against and points.
-New or corrected final scores independently checked against ESPN STATUS_FULL_TIME: 5/5; mismatches: 0.
+New or corrected final scores independently checked against ESPN STATUS_FULL_TIME: 0/0; mismatches: 0.
 Metrics from finals only: 273 goals (2.73/match); BTTS 49/100 (49.0%); Over 2.5 47/100 (47.0%).
 Only a successful official and independent validation permits the workflow to commit the updated page.
