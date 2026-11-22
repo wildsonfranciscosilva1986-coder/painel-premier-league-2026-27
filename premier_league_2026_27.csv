@@ -99,16 +99,16 @@
 10,2026-11-08,16:30,GMT,Manchester United,4,4,Aston Villa,finished,2645292
 10,2026-11-07,17:30,GMT,Nottingham Forest,3,1,Manchester City,finished,2645293
 10,2026-11-08,14:00,GMT,Sunderland,1,0,Chelsea,finished,2645294
-11,2026-11-21,15:00,GMT,Bournemouth,,,Nottingham Forest,live,2645295
-11,2026-11-21,15:00,GMT,Aston Villa,,,Sunderland,live,2645296
+11,2026-11-21,15:00,GMT,Bournemouth,2,0,Nottingham Forest,finished,2645295
+11,2026-11-21,15:00,GMT,Aston Villa,0,0,Sunderland,finished,2645296
 11,2026-11-23,20:00,GMT,Brentford,,,Everton,scheduled,2645297
-11,2026-11-21,15:00,GMT,Chelsea,,,Leeds United,live,2645298
-11,2026-11-21,15:00,GMT,Coventry City,,,Crystal Palace,live,2645299
-11,2026-11-22,14:00,GMT,Hull City,,,Brighton and Hove Albion,scheduled,2645300
-11,2026-11-22,16:30,GMT,Liverpool,,,Manchester United,scheduled,2645301
+11,2026-11-21,15:00,GMT,Chelsea,1,4,Leeds United,finished,2645298
+11,2026-11-21,15:00,GMT,Coventry City,3,2,Crystal Palace,finished,2645299
+11,2026-11-22,14:00,GMT,Hull City,2,0,Brighton and Hove Albion,finished,2645300
+11,2026-11-22,16:30,GMT,Liverpool,,,Manchester United,live,2645301
 11,2026-11-21,12:30,GMT,Manchester City,1,1,Fulham,finished,2645302
-11,2026-11-21,17:30,GMT,Newcastle United,,,Arsenal,scheduled,2645303
-11,2026-11-21,15:00,GMT,Tottenham Hotspur,,,Ipswich Town,live,2645304
+11,2026-11-21,17:30,GMT,Newcastle United,2,2,Arsenal,finished,2645303
+11,2026-11-21,15:00,GMT,Tottenham Hotspur,2,0,Ipswich Town,finished,2645304
 12,2026-11-29,16:30,GMT,Arsenal,,,Manchester City,scheduled,2645305
 12,2026-11-29,14:05,GMT,Brighton and Hove Albion,,,Newcastle United,scheduled,2645306
 12,2026-11-29,14:05,GMT,Crystal Palace,,,Hull City,scheduled,2645307
